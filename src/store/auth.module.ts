@@ -17,6 +17,11 @@ export const useAuthStore = defineStore('auth', () => {
     user = null
   }
 
+  function updateSuccess(userz: any): void {
+    status.loggedIn = true
+    user = userz
+  }
+
   function logout(): void {
     status.loggedIn = false
     user = null
@@ -53,13 +58,29 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function register(data: any): Promise<any> {
-    return AuthService.register(data.phone, data.email, data.password).then(
-      (response) => {
-        registerSuccess()
-        return Promise.resolve(response.data)
+    return AuthService.register(data.phone, data.password).then(
+      (user) => {
+        loginSuccess(user)
+        return Promise.resolve(user)
       },
       (error) => {
-        registerFailure()
+        loginFailure()
+        const message
+          = (error.response && error.response.data && error.response.data.message)
+          || error.message
+          || error.toString()
+        return Promise.reject(message)
+      },
+    )
+  }
+
+  function update(data: any): Promise<any> {
+    return AuthService.update(user.phone, data.phone, data.email, data.oldPassword, data.password).then(
+      (user) => {
+        updateSuccess(user)
+        return Promise.resolve(user)
+      },
+      (error) => {
         const message
           = (error.response && error.response.data && error.response.data.message)
           || error.message
@@ -84,6 +105,7 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     getUser,
     login,
+    update,
   }
 })
 

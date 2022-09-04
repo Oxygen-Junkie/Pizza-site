@@ -15,7 +15,6 @@ const isLoggedIn = $ref(Auth.isLoggedIn())
 
 const schema = yup.object().shape({
   phone: yup.string().required('Требуется номер телефона!').phone('RU', true, 'Номер телефона недействителен!'),
-  email: yup.string().required('Требуется электронная почта!').email('Электронная почта недействительна').max(50, 'Допустимо не больше 50 символов'),
   password: yup.string().required('Требуется пароль!').min(6, 'Пароль должен быть минимум в 6 символов').max(40, 'Пароль должен быть максимум в 40 символов'),
 })
 
@@ -71,15 +70,6 @@ function handleRegister(user: any) {
             name="phone"
           />
           <ErrorMessage name="phone" class="error-feedback" />
-        </div>
-        <div class="form-group">
-          <label for="email">Электронная почта</label>
-          <Field
-            type="email"
-            class="form-control"
-            name="email"
-          />
-          <ErrorMessage name="email" class="error-feedback" />
         </div>
         <div class="form-group">
           <label for="password">Пароль</label>

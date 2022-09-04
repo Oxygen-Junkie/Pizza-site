@@ -20,11 +20,30 @@ class AuthService {
     localStorage.removeItem('user')
   }
 
-  register(phone: string, email: string, password: string) {
+  register(phone: string, password: string) {
     return axios.post(`${API_URL}signup`, {
+      phone,
+      password,
+    }).then((response) => {
+      if (response.data.accessToken)
+        localStorage.setItem('user', JSON.stringify(response.data))
+
+      return response.data
+    })
+  }
+
+  update(oldPhone: string, phone: string, email: string, oldPassword: string, password: string) {
+    return axios.put(`${API_URL}update`, {
+      oldPhone,
       phone,
       email,
       password,
+      oldPassword,
+    }).then((response) => {
+      if (response.data.accessToken)
+        localStorage.setItem('user', JSON.stringify(response.data))
+
+      return response.data
     })
   }
 }

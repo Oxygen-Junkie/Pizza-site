@@ -79,7 +79,7 @@ function registerInstead() {
       </div>
 
       <div class="form-group">
-        <button class="btn" @click.prevent="registerInstead">
+        <button class="btn btn-link" @click.prevent="registerInstead">
           <span>Зарегистрироваться</span>
         </button>
       </div>
