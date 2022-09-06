@@ -53,6 +53,9 @@ function registerInstead() {
 
 <template>
   <div class="card card-container">
+    <div class="text-right">
+      <button type="button" class="btn-close text-right" @click.prevent="flags.closePopUps" />
+    </div>
     <img
       id="profile-img"
       src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -85,7 +88,7 @@ function registerInstead() {
       </div>
 
       <div class="form-group">
-        <button class="btn btn-primary btn-block" :disabled="loading">
+        <button class="btn btn-primary btn-block bg-blue" :disabled="loading">
           <span
             v-show="loading"
             class="spinner-border spinner-border-sm"
@@ -138,6 +141,10 @@ function registerInstead() {
       -moz-border-radius: 50%;
       -webkit-border-radius: 50%;
       border-radius: 50%;
+    }
+
+    .btn-close {
+      left: 0;
     }
     </style>
 

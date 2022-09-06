@@ -75,7 +75,7 @@ onUnmounted(() => {
       <li class="nav-item">
         <router-link v-if="!flags.shade" to="/profile" class="nav-link">
           <p i-carbon-user-profile-alt /> Профиль
-          {{ `${currentUser.phone.substring(0, 7)}....` }}
+          {{ currentUser.phone }}
         </router-link>
       </li>
       <li class="nav-item">

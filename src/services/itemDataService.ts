@@ -12,7 +12,7 @@ class ItemDataService {
     return axios.post(`${API_URL}`, data, { headers: authHeader() })
   }
 
-  get(id: string) {
+  get(id: any) {
     return axios.get(`${API_URL}${id}`)
   }
 
@@ -26,6 +26,18 @@ class ItemDataService {
 
   findByTitle(title: string) {
     return axios.get(`${API_URL}?title=${title}`)
+  }
+
+  createCategory(data: any) {
+    return axios.post(`${API_URL}category`, data, { headers: authHeader() })
+  }
+
+  getAllCategories() {
+    return axios.get(`${API_URL}category`)
+  }
+
+  getByCategory(id: any) {
+    return axios.get(`${API_URL}category/${id}`)
   }
 }
 

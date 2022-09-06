@@ -4,4 +4,5 @@ export default interface Item {
   description: string
   price: number
   availability: number
+  categoryId: null
 }

@@ -3,6 +3,9 @@ import ItemDataService from '~/services/itemDataService'
 // import type Item from '~/types/Item'
 const props = defineProps<{ itemID: number }>()
 const router = useRouter()
+const auth = useAuthStore()
+
+const currentUser = $ref(auth.getUser())
 
 const currentItem = ref({
   id: null,
@@ -43,10 +46,16 @@ function deleteItem() {
       // console.log(e)
     })
 }
-onMounted(() => {
-  message.value = ''
-  getItem(props.itemID)
-})
+
+const showBadButtons = () => {
+  if (currentUser && currentUser.roles)
+    return currentUser.roles.includes('ROLE_MANAGER')
+
+  return false
+}
+
+message.value = ''
+getItem(props.itemID)
 </script>
 
 <template>
@@ -93,11 +102,15 @@ onMounted(() => {
       </div>
     </form>
 
-    <button class="badge bg-red" @click="deleteItem">
+    <button type="submit" class="badge bg-blue">
+      Купить предмет
+    </button>
+
+    <button v-if="showBadButtons()" class="badge bg-red" @click="deleteItem">
       Удалить предмет
     </button>
 
-    <button type="submit" class="badge bg-blue" @click="updateItem">
+    <button v-if="showBadButtons()" class="badge bg-green" @click="updateItem">
       Обновить предмет
     </button>
     <p>{{ message }}</p>
@@ -105,6 +118,6 @@ onMounted(() => {
 
   <div v-else>
     <br>
-    <p>Please click on a Item...</p>
+    <p>Выберите предмет</p>
   </div>
 </template>

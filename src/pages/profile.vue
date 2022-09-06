@@ -37,12 +37,10 @@ function updateReq(user: any) {
   )
 }
 
-onMounted(() => {
-  if (!currentUser) {
-    router.push('/')
-    flags.changePopUpSignIn()
-  }
-})
+if (!currentUser) {
+  router.push('/')
+  flags.changePopUpSignIn()
+}
 </script>
 
 <template>

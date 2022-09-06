@@ -3,6 +3,8 @@ import ItemDataService from '~/services/itemDataService'
 import type Item from '~/types/Item'
 import { useAuthStore } from '~/store/auth.module'
 import { useFlagStore } from '~/store/flags.module'
+const props = defineProps<{ categoryID: number }>()
+
 const auth = useAuthStore()
 const flags = useFlagStore()
 
@@ -16,12 +18,11 @@ const currentItem = ref({
   price: 0.00,
   availability: 0,
 })
-// const itemID = ref(NaN)
 const currentIndex = ref(-1)
 const title = ref('')
 
 function retrieveItems() {
-  ItemDataService.getAll()
+  ItemDataService.getByCategory(props.categoryID)
     .then((response) => {
       items.value = response.data
       // console.log(items.value)
@@ -116,10 +117,11 @@ retrieveItems()
   </div>
 </template>
 
-<style scoped>
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
-}
-</style>
+    <style scoped>
+    .list {
+      text-align: left;
+      max-width: 750px;
+      margin: auto;
+    }
+    </style>
+
