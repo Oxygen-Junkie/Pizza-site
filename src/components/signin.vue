@@ -142,9 +142,5 @@ function registerInstead() {
       -webkit-border-radius: 50%;
       border-radius: 50%;
     }
-
-    .btn-close {
-      left: 0;
-    }
     </style>
 

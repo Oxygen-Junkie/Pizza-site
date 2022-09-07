@@ -29,7 +29,7 @@ retrieveCategories()
 
 <template>
   <div class="list row bg-blue">
-    <h4>Товары в наличии</h4>
+    <h4>Категории</h4>
     <ul class="list-group">
       <li
         v-for="(category, index) in categories"

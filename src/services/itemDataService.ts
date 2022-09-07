@@ -1,43 +1,46 @@
-import axios from 'redaxios'
 import authHeader from './auth-header'
+import fileHeader from './file-header'
+import http from './http-common'
 
 const API_URL = import.meta.env.VITE_url_tutorial
 
 class ItemDataService {
   getAll() {
-    return axios.get(`${API_URL}`)
+    return http.get(`${API_URL}`)
   }
 
-  create(data: any) {
-    return axios.post(`${API_URL}`, data, { headers: authHeader() })
+  create(data: any, file: any) {
+    data.append(file)
+    return http.post(`${API_URL}`, data, { headers: fileHeader() })
   }
 
   get(id: any) {
-    return axios.get(`${API_URL}${id}`)
+    return http.get(`${API_URL}${id}`)
   }
 
-  update(id: any, data: any) {
-    return axios.put(`${API_URL}${id}`, data)
+  update(id: any, data: any, file: any) {
+    data.append(file)
+    return http.put(`${API_URL}${id}`, data, { headers: fileHeader() })
   }
 
   delete(id: any) {
-    return axios.delete(`${API_URL}${id}`)
+    return http.delete(`${API_URL}${id}`, { headers: authHeader() })
   }
 
   findByTitle(title: string) {
-    return axios.get(`${API_URL}?title=${title}`)
+    return http.get(`${API_URL}?title=${title}`)
   }
 
   createCategory(data: any) {
-    return axios.post(`${API_URL}category`, data, { headers: authHeader() })
+    return http.post(`${API_URL}category`, data, { headers: authHeader() })
   }
 
   getAllCategories() {
-    return axios.get(`${API_URL}category`)
+    return http.get(`${API_URL}category`)
   }
 
   getByCategory(id: any) {
-    return axios.get(`${API_URL}category/${id}`)
+    return http.get(`${API_URL}category/${id}`)
   }
 }
 

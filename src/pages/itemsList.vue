@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import ItemDataService from '~/services/itemDataService'
 import type Item from '~/types/Item'
 import { useAuthStore } from '~/store/auth.module'
@@ -9,13 +10,7 @@ const flags = useFlagStore()
 const currentUser = $ref(auth.getUser())
 
 const items = ref([])
-const currentItem = ref({
-  id: null,
-  title: '',
-  description: '',
-  price: 0.00,
-  availability: 0,
-})
+const currentItem: Ref<Item | undefined> = ref()
 // const itemID = ref(NaN)
 const currentIndex = ref(-1)
 const title = ref('')
@@ -33,7 +28,7 @@ function retrieveItems() {
 
 function refreshList() {
   retrieveItems()
-  currentItem.value = {} as Item
+  currentItem.value = ref().value
   currentIndex.value = -1
 }
 

@@ -1,31 +1,18 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import ItemDataService from '~/services/itemDataService'
 import type Item from '~/types/Item'
 import type Category from '~/types/Category'
 
-const categories = ref([])
-const selectedCategory = ref({
-  id: null,
-  name: '',
-})
+const categories: Ref<any> = ref([])
+const category: Ref<Category | undefined> = ref()
 const submitted = ref(false)
 const submittedCat = ref(false)
-let item: Item = {
-  id: null,
-  title: '',
-  description: '',
-  price: 0.00,
-  availability: 0,
-  categoryId: null,
-}
-
-const categoryz: Category = {
-  id: null,
-  name: '',
-}
+const item: Ref<Item | undefined> = ref()
+let image: any
 
 function retrieveCategories() {
-  ItemDataService.getAllCategories()
+  categories.value = ItemDataService.getAllCategories()
     .then((response) => {
       categories.value = response.data
       // console.log(items.value)
@@ -36,17 +23,9 @@ function retrieveCategories() {
 }
 
 function saveItem() {
-  const data = {
-    title: item.title,
-    description: item.description,
-    price: item.price,
-    availability: item.availability,
-    categoryId: selectedCategory.value.id,
-  }
-
-  ItemDataService.create(data)
+  ItemDataService.create(item, image)
     .then((response) => {
-      item.id = response.data.id
+      item.value.id = response.data.id
       // console.log(response.data)
       submitted.value = true
     })
@@ -57,17 +36,13 @@ function saveItem() {
 
 function newItem() {
   submitted.value = false
-  item = {} as Item
+  item.value = ref().value
 }
 
 function saveCategory() {
-  const data = {
-    name: category.name,
-  }
-
-  ItemDataService.createCategory(data)
+  ItemDataService.createCategory(category)
     .then((response) => {
-      category.id = response.data.id
+      category.value.id = response.data.id
       // console.log(response.data)
       submittedCat.value = true
     })
@@ -78,7 +53,11 @@ function saveCategory() {
 
 function newCategory() {
   submittedCat.value = false
-  category = {} as Category
+  category.value = ref().value
+}
+
+function receiveImage(imagez: any) {
+  image = imagez
 }
 
 retrieveCategories()
@@ -87,6 +66,18 @@ retrieveCategories()
 <template>
   <div class="submit-form">
     <div v-if="!submitted">
+      <div class="form-group">
+        <label for="image">Изображение</label>
+        <input
+          :ref="(image) => { receiveImage(image) }"
+          type="file"
+          class="form-control"
+          accept="image/*"
+          required
+          name="image"
+        >
+        <span v-if="image">Название файла должно быть тут !</span>
+      </div>
       <div class="form-group">
         <label for="title">Наименование</label>
         <input
@@ -138,8 +129,8 @@ retrieveCategories()
 
       <div class="form-group">
         <label for="description">Категория</label>
-        <select v-model="selectedCategory" class="form-select">
-          <option v-for="(category, index) in categories" :key="index" :value="category.name">
+        <select v-model="item.categoryId" class="form-select">
+          <option v-for="(category) in categories" :key="category.id" :value="category.name">
             {{ category.name }}
           </option>
         </select>
@@ -164,7 +155,7 @@ retrieveCategories()
         <label for="name">Наименование новой категории</label>
         <input
           id="name"
-          v-model="categoryz.name"
+          v-model="category.name"
           type="text"
           class="form-control"
           required

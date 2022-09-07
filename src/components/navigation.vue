@@ -6,6 +6,7 @@ const flags = useFlagStore()
 const router = useRouter()
 const showHeadbar = ref(true)
 const lastScrollPosition = ref(0)
+const title = ''
 
 const currentUser = $ref(auth.getUser())
 
@@ -34,6 +35,17 @@ const handleScroll = () => {
     return
   showHeadbar.value = currentScrollPostion < lastScrollPosition.value
   lastScrollPosition.value = currentScrollPostion
+}
+
+function searchTitle() {
+  ItemDataService.findByTitle(title.value)
+    .then((response) => {
+      items.value = response.data
+      // console.log(response.data)
+    })
+    .catch((e) => {
+      // console.log(e)
+    })
 }
 
 window.addEventListener('scroll', handleScroll)

@@ -9,6 +9,7 @@ const flags = useFlagStore()
     <div class="container h-100">
       <signin v-if="flags.popUpSignIn" />
       <signup v-if="flags.popUpSignUp" />
+      <item-view v-if="flags.popUpItem" :item="flags.getItem()" />
       <div :class="{ 'b blur': flags.shade }">
         <navigation :key="flags.render" />
         <div class="siteContent">
@@ -29,14 +30,14 @@ const flags = useFlagStore()
     filter:blur(5px);
   };
   .siteContent{
-  display:flex;
-  width:100%;
-};
+    display:flex;
+    width:100%;
+  };
   .categTab{
-  flex: 2;
+    flex: 2;
     flex-flow:column;
-};
-.pageTab{
-  flex: 5;
-};
+  };
+  .pageTab{
+    flex: 5;
+  };
 </style>

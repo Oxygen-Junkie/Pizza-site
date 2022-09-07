@@ -1,4 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import type Item from '~/types/Item'
 
 export const useFlagStore = defineStore('flag', () => {
   /**
@@ -6,8 +7,10 @@ export const useFlagStore = defineStore('flag', () => {
    */
   const popUpSignIn = ref(false)
   const popUpSignUp = ref(false)
+  const popUpItem = ref(false)
   const shade = ref(false)
   const render = ref(-1)
+  let item: Item | undefined
 
   function changePopUpSignIn() {
     popUpSignIn.value = !popUpSignIn.value
@@ -22,11 +25,26 @@ export const useFlagStore = defineStore('flag', () => {
   function closePopUps() {
     popUpSignIn.value = false
     popUpSignUp.value = false
+    popUpItem.value = false
     shade.value = false
+    item = undefined
+  }
+
+  function changePopUpItem() {
+    popUpItem.value = true
+    shade.value = true
   }
 
   function rerender() {
     render.value++
+  }
+
+  function setItem(itemz: Item) {
+    item = itemz
+  }
+
+  function getItem() {
+    return item
   }
 
   return {
@@ -34,10 +52,14 @@ export const useFlagStore = defineStore('flag', () => {
     changePopUpSignUp,
     closePopUps,
     rerender,
+    changePopUpItem,
+    setItem,
+    getItem,
     popUpSignIn,
     popUpSignUp,
     shade,
     render,
+    popUpItem,
   }
 })
 

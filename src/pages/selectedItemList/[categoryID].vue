@@ -1,28 +1,12 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import ItemDataService from '~/services/itemDataService'
-import type Item from '~/types/Item'
-import { useAuthStore } from '~/store/auth.module'
-import { useFlagStore } from '~/store/flags.module'
 const props = defineProps<{ categoryID: number }>()
 
-const auth = useAuthStore()
-const flags = useFlagStore()
-
-const currentUser = $ref(auth.getUser())
-
-const items = ref([])
-const currentItem = ref({
-  id: null,
-  title: '',
-  description: '',
-  price: 0.00,
-  availability: 0,
-})
-const currentIndex = ref(-1)
-const title = ref('')
+const items: Ref<any> = ref([])
 
 function retrieveItems() {
-  ItemDataService.getByCategory(props.categoryID)
+  items.value = ItemDataService.getByCategory(props.categoryID)
     .then((response) => {
       items.value = response.data
       // console.log(items.value)
@@ -32,96 +16,35 @@ function retrieveItems() {
     })
 }
 
-function refreshList() {
-  retrieveItems()
-  currentItem.value = {} as Item
-  currentIndex.value = -1
-}
-
-function setActiveItem(item: Item, index: number) {
-  currentItem.value = item
-  currentIndex.value = index
-}
-
-function searchTitle() {
-  ItemDataService.findByTitle(title.value)
-    .then((response) => {
-      items.value = response.data
-      // console.log(response.data)
-    })
-    .catch((e) => {
-      // console.log(e)
-    })
-}
-
-const showEditButton = () => {
-  if (currentUser && currentUser.roles)
-    return currentUser.roles.includes('ROLE_MANAGER')
-
-  return false
-}
-
 retrieveItems()
 </script>
 
 <template>
-  <div class="list row">
-    <div class="col-md-6">
-      <h4>Товары в наличии</h4>
-      <ul class="list-group">
-        <li
-          v-for="(item, index) in items"
-          :key="index"
-          class="list-group-item"
-          :class="{ active: index === currentIndex }"
-          :disabled="flags.shade"
-          @click="setActiveItem(item, index)"
-        >
-          {{ item.title }}
-        </li>
-      </ul>
-    </div>
-    <div class="col-md-6">
-      <div v-if="currentItem.id">
-        <h4>Item</h4>
-        <div>
-          <label><strong>Наименование:</strong></label>
-          {{ currentItem.title }}
-        </div>
-        <div>
-          <label><strong>Описание:</strong></label>
-          {{ currentItem.description }}
-        </div>
-        <div>
-          <label><strong>Цена:</strong></label>
-          {{ currentItem.price }}
-        </div>
-        <div>
-          <label><strong>Количество:</strong></label>
-          {{ currentItem.availability }}
-        </div>
-
-        <router-link
-          v-if="showEditButton()"
-          class="badge bg-blue"
-          :to="`/itemDetails/${currentItem.id}`"
-        >
-          Изменить
-        </router-link>
-      </div>
-      <div v-else>
-        <br>
-        <p>Выберите интересующий вас товар</p>
-      </div>
+  <div class="wrapper">
+    <div class="photos">
+      <image_palette
+        v-for="item in items"
+        :key="item.id"
+        :item="item"
+      />
     </div>
   </div>
 </template>
 
-    <style scoped>
-    .list {
-      text-align: left;
-      max-width: 750px;
-      margin: auto;
-    }
-    </style>
+<style scoped>
+  .wrapper {
+    height: 600 px;
+    overflow-y: auto;
+  }
+
+  .photos {
+    column-count: 3;
+  }
+
+@media screen and (min-width: 576px) {
+  .photos {
+    column-count: 4;
+  }
+}
+</style>
 

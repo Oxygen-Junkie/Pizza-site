@@ -1,9 +1,9 @@
-import axios from 'redaxios'
+import http from './http-common'
 const API_URL = import.meta.env.VITE_url_authentication
 
 class AuthService {
   login(phone: string, password: string) {
-    return axios
+    return http
       .post(`${API_URL}signin`, {
         phone,
         password,
@@ -21,7 +21,7 @@ class AuthService {
   }
 
   register(phone: string, password: string) {
-    return axios.post(`${API_URL}signup`, {
+    return http.post(`${API_URL}signup`, {
       phone,
       password,
     }).then((response) => {
@@ -33,7 +33,7 @@ class AuthService {
   }
 
   update(oldPhone: string, phone: string, email: string, oldPassword: string, password: string) {
-    return axios.put(`${API_URL}update`, {
+    return http.put(`${API_URL}update`, {
       oldPhone,
       phone,
       email,
