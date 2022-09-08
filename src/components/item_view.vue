@@ -9,11 +9,11 @@ const flags = useFlagStore()
 
 const currentUser = $ref(auth.getUser())
 
-const currentItem: Ref<Item | undefined> = ref(props.item)
+const currentItem: Ref<Item> = ref(props.item)
 const imageURL = ref('')
 
 function retrieveItem() {
-  imageURL.value = import.meta.env.VITE_base_api.toString() + import.meta.env.VITE_url_images.toString() + props.item.fileName
+  imageURL.value = import.meta.env.VITE_base_api.toString() + import.meta.env.VITE_url_images.toString() + currentItem.value.fileName
 }
 
 function buy() {
@@ -33,7 +33,7 @@ retrieveItem()
 <template>
   <div class="card card-container">
     <div class="text-right">
-      <button type="button" class="btn-close text-right" @click.prevent="flags.closePopUps" />
+      <button type="button" @click.prevent="flags.closePopUps" />
     </div>
     <img
       :src="imageURL"
@@ -70,29 +70,26 @@ retrieveItem()
   </div>
 </template>
 
-    <style scoped>
-        .card-container.card {
-      max-width: 350px !important;
-      padding: 40px 40px;
-    }
+<style scoped>
+.card-container.card {
+  max-width: 350px !important;
+  padding: 40px 40px;
+}
 
-    .card {
-      background-color: #f7f7f7;
-      padding: 20px 25px 30px;
-      -moz-border-radius: 2px;
-      -webkit-border-radius: 2px;
-      border-radius: 2px;
-      -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-      -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-      position:fixed;
-      top: 50%;
-      left: 50%;
-      margin-left:-250px;
-      margin-top:-200px;
-    }
-
-    .product-img{
-    }
-    </style>
+.card {
+  background-color: #f7f7f7;
+  padding: 20px 25px 30px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  margin-left:-250px;
+  margin-top:-200px;
+}
+</style>
 

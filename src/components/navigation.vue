@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import { useFlagStore } from '~/store/flags.module'
+import ItemDataService from '~/services/itemDataService'
+import type Item from '~/types/Item'
 
 const auth = useAuthStore()
 const flags = useFlagStore()
 const router = useRouter()
 const showHeadbar = ref(true)
 const lastScrollPosition = ref(0)
-const title = ''
+const title = ref('')
+const items: Ref<Item[]> = ref([])
 
 const currentUser = $ref(auth.getUser())
 
@@ -61,11 +65,6 @@ onUnmounted(() => {
       <li class="nav-item">
         <router-link v-if="!flags.shade" to="/home" class="nav-link">
           <p i-carbon-home /> Главная страница
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link v-if="!flags.shade" to="/itemsList" class="nav-link">
-          <p i-carbon-medication /> Предметы
         </router-link>
       </li>
       <li v-if="showManagerBoard()" class="nav-item">

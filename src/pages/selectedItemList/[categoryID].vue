@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
 import ItemDataService from '~/services/itemDataService'
+import type Item from '~/types/Item'
 const props = defineProps<{ categoryID: number }>()
 
-const items: Ref<any> = ref([])
+const items: Ref<Item[]> = ref([])
 
 function retrieveItems() {
-  items.value = ItemDataService.getByCategory(props.categoryID)
+  ItemDataService.getByCategory(props.categoryID)
     .then((response) => {
       items.value = response.data
       // console.log(items.value)

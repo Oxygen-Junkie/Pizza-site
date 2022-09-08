@@ -1,6 +1,7 @@
 import authHeader from './auth-header'
 import fileHeader from './file-header'
 import http from './http-common'
+import axios from 'redaxios'
 
 const API_URL = import.meta.env.VITE_url_tutorial
 
@@ -10,8 +11,10 @@ class ItemDataService {
   }
 
   create(data: any, file: any) {
-    data.append(file)
-    return http.post(`${API_URL}`, data, { headers: fileHeader() })
+    const formData = new FormData()
+	formData.append('file', file)
+	formData.append('body', data)
+    return axios.post(`${API_URL}`, formData, { headers: fileHeader() })
   }
 
   get(id: any) {
@@ -19,8 +22,10 @@ class ItemDataService {
   }
 
   update(id: any, data: any, file: any) {
-    data.append(file)
-    return http.put(`${API_URL}${id}`, data, { headers: fileHeader() })
+    const formData = new FormData()
+	formData.append('file', file)
+	formData.append('body', data)
+    return axios.post(`${API_URL}${id}`, formData, { headers: fileHeader() })
   }
 
   delete(id: any) {

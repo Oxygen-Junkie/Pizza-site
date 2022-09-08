@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import ItemDataService from '~/services/itemDataService'
 import type Category from '~/types/Category'
 import { useFlagStore } from '~/store/flags.module'
 const flags = useFlagStore()
 const router = useRouter()
 
-const categories = ref([])
+const categories: Ref<Category[]> = ref([])
 const currentIndex = ref(-1)
 
 function retrieveCategories() {
@@ -45,8 +46,6 @@ retrieveCategories()
   </div>
 </template>
 
-    <style scoped>
-    .list {
-    }
-    </style>
+<style scoped>
+</style>
 

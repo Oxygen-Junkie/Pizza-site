@@ -54,7 +54,7 @@ function registerInstead() {
 <template>
   <div class="card card-container">
     <div class="text-right">
-      <button type="button" class="btn-close text-right" @click.prevent="flags.closePopUps" />
+      <button type="button" class="btn-close" @click.prevent="flags.closePopUps" />
     </div>
     <img
       id="profile-img"

@@ -8,13 +8,14 @@ const auth = useAuthStore()
 
 const currentUser = $ref(auth.getUser())
 
-const currentItem: Ref<Item | undefined> = ref()
+const currentItem: Ref<Item> = ref() as Ref<Item>
 const message = ref('')
 const imageURL = ref('')
+const categories: Ref<any> = ref([])
 let image: any
 
 function getItem(id: any) {
-  currentItem.value = ItemDataService.get(id)
+  ItemDataService.get(id)
     .then((response) => {
       currentItem.value = response.data
       // console.log(response.data)
@@ -24,6 +25,18 @@ function getItem(id: any) {
     })
   imageURL.value = import.meta.env.VITE_base_api.toString() + import.meta.env.VITE_url_images.toString() + currentItem.value.fileName
 }
+
+function retrieveCategories() {
+  ItemDataService.getAllCategories()
+    .then((response) => {
+      categories.value = response.data
+      // console.log(items.value)
+    })
+    .catch((e) => {
+      // console.log(e)
+    })
+}
+
 function updateItem() {
   ItemDataService.update(currentItem.value.id, currentItem, image)
     .then((response) => {
@@ -34,6 +47,7 @@ function updateItem() {
       // console.log(e)
     })
 }
+
 function deleteItem() {
   ItemDataService.delete(currentItem.value.id)
     .then((response) => {
@@ -48,12 +62,11 @@ function deleteItem() {
 const showBadButtons = () => {
   if (currentUser && currentUser.roles)
     return currentUser.roles.includes('ROLE_MANAGER')
-  
   return false
 }
 
 function retrieveImage() {
-  imageURL.value = import.meta.env.VITE_base_api.toString() + import.meta.env.VITE_url_images.toString() + currentImage.value.fileName
+  imageURL.value = import.meta.env.VITE_base_api.toString() + import.meta.env.VITE_url_images.toString() + currentItem.value.fileName
 }
 
 function receiveImage(imagez: any) {
@@ -63,6 +76,7 @@ function receiveImage(imagez: any) {
 message.value = ''
 getItem(props.itemID)
 retrieveImage()
+retrieveCategories()
 </script>
 
 <template>
@@ -116,15 +130,23 @@ retrieveImage()
         >
       </div>
       <div class="form-group">
-        <strong>{{ currentItem.availability }}</strong>
-        <label for="description">Новое количество</label>
+        <strong>{{ currentItem.price }}</strong>
+        <label for="description">Новая цена</label>
         <input
-          id="availability"
-          v-model="currentItem.availability"
+          id="price"
+          v-model="currentItem.price"
           type="number"
           class="form-control"
           min="0"
         >
+      </div>
+      <div class="form-group">
+        <label for="description">Категория</label>
+        <select v-model="currentItem.categoryId" class="form-select">
+          <option v-for="category in categories" :key="category.id" :value="category.name">
+            {{ category.name }}
+          </option>
+        </select>
       </div>
     </form>
 

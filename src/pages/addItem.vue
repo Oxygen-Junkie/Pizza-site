@@ -5,14 +5,14 @@ import type Item from '~/types/Item'
 import type Category from '~/types/Category'
 
 const categories: Ref<any> = ref([])
-const category: Ref<Category | undefined> = ref()
+const category: Ref<Category> = ref() as Ref<Category>
 const submitted = ref(false)
 const submittedCat = ref(false)
-const item: Ref<Item | undefined> = ref()
+const item: Ref<Item> = ref() as Ref<Item>
 let image: any
 
 function retrieveCategories() {
-  categories.value = ItemDataService.getAllCategories()
+  ItemDataService.getAllCategories()
     .then((response) => {
       categories.value = response.data
       // console.log(items.value)
@@ -130,7 +130,7 @@ retrieveCategories()
       <div class="form-group">
         <label for="description">Категория</label>
         <select v-model="item.categoryId" class="form-select">
-          <option v-for="(category) in categories" :key="category.id" :value="category.name">
+          <option v-for="category in categories" :key="category.id" :value="category.name">
             {{ category.name }}
           </option>
         </select>
