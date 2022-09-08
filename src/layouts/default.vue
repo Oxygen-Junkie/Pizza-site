@@ -25,7 +25,7 @@ const flags = useFlagStore()
   </main>
 </template>
 
-<style>
+<style scoped>
   .b.blur{
     filter:blur(5px);
   };

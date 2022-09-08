@@ -130,8 +130,8 @@ retrieveCategories()
       <div class="form-group">
         <label for="description">Категория</label>
         <select v-model="item.categoryId" class="form-select">
-          <option v-for="category in categories" :key="category.id" :value="category.name">
-            {{ category.name }}
+          <option v-for="categoryz in categories" :key="categoryz.id" :value="categoryz.name">
+            {{ categoryz.name }}
           </option>
         </select>
       </div>

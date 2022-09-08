@@ -1,9 +1,10 @@
+import axios from 'redaxios'
 import authHeader from './auth-header'
 import fileHeader from './file-header'
 import http from './http-common'
-import axios from 'redaxios'
 
-const API_URL = import.meta.env.VITE_url_tutorial
+const API_URL = import.meta.env.VITE_url_item
+const BASE_URL = import.meta.env.VITE_base_api
 
 class ItemDataService {
   getAll() {
@@ -12,9 +13,9 @@ class ItemDataService {
 
   create(data: any, file: any) {
     const formData = new FormData()
-	formData.append('file', file)
-	formData.append('body', data)
-    return axios.post(`${API_URL}`, formData, { headers: fileHeader() })
+    formData.append('file', file)
+    formData.append('body', data)
+    return axios.post(`${BASE_URL}${API_URL}`, formData, { headers: fileHeader() })
   }
 
   get(id: any) {
@@ -23,9 +24,9 @@ class ItemDataService {
 
   update(id: any, data: any, file: any) {
     const formData = new FormData()
-	formData.append('file', file)
-	formData.append('body', data)
-    return axios.post(`${API_URL}${id}`, formData, { headers: fileHeader() })
+    formData.append('file', file)
+    formData.append('body', data)
+    return axios.post(`${BASE_URL}${API_URL}${id}`, formData, { headers: fileHeader() })
   }
 
   delete(id: any) {

@@ -29,7 +29,7 @@ retrieveCategories()
 </script>
 
 <template>
-  <div class="list row bg-blue">
+  <div class="list bg-blue">
     <h4>Категории</h4>
     <ul class="list-group">
       <li

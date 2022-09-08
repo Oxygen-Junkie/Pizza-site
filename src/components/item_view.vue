@@ -3,6 +3,7 @@ import type { Ref } from 'vue'
 import type Item from '~/types/Item'
 import { useAuthStore } from '~/store/auth.module'
 import { useFlagStore } from '~/store/flags.module'
+
 const props = defineProps<{ item: Item }>()
 const auth = useAuthStore()
 const flags = useFlagStore()
@@ -92,4 +93,3 @@ retrieveItem()
   margin-top:-200px;
 }
 </style>
-
