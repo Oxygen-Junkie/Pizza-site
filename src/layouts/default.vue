@@ -18,14 +18,14 @@ const flags = useFlagStore()
       >
         <div
           style="
-          flex: 0.6;
+          flex: 1;
         "
         >
           <categories />
         </div>
         <div
           style="
-          flex: 6;
+          flex: 5;
         "
         >
           <RouterView />

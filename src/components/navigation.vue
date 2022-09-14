@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import type { Ref } from 'vue'
 import { useFlagStore } from '~/store/flags.module'
-import ItemDataService from '~/services/itemDataService'
-import type Item from '~/types/Item'
 
 const auth = useAuthStore()
 const flags = useFlagStore()
@@ -10,7 +7,6 @@ const router = useRouter()
 const showHeadbar = ref(true)
 const lastScrollPosition = ref(0)
 const title = ref('')
-const items: Ref<Item[]> = ref([])
 
 const currentUser = $ref(auth.getUser())
 
@@ -42,14 +38,7 @@ const handleScroll = () => {
 }
 
 function searchTitle() {
-  ItemDataService.findByTitle(title.value)
-    .then((response) => {
-      items.value = response.data
-      // console.log(response.data)
-    })
-    .catch((e) => {
-      // console.log(e)
-    })
+  router.push(`/searchResult/${title.value}`)
 }
 
 window.addEventListener('scroll', handleScroll)
@@ -75,7 +64,7 @@ onUnmounted(() => {
     </div>
 
     <div class="input-group mb-3">
-      <input v-model="title" type="text" class="form-control" placeholder="Введите название товара">
+      <input v-model="title" type="text" class="form-control form-control-sm" placeholder="Введите название товара или категории">
       <div class="input-group-append">
         <button class="btn btn-outline-secondary bg-blue" type="button" @click="searchTitle">
           Найти
@@ -115,6 +104,6 @@ onUnmounted(() => {
 
   .h--hidden{
   box-shadow: none;
-  transform: translate3d(0,-100px,0);
+  transform: translate3d(0,-115px,0);
 }
 </style>

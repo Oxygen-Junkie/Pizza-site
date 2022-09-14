@@ -2,15 +2,15 @@
 import type { Ref } from 'vue'
 import ItemDataService from '~/services/itemDataService'
 import type Item from '~/types/Item'
-const props = defineProps<{ categoryID: string }>()
+const props = defineProps<{ title: string }>()
 
 const items: Ref<Item[]> = ref([])
 
 function retrieveItems() {
-  ItemDataService.getByCategory(props.categoryID)
+  ItemDataService.findByTitle(props.title)
     .then((response) => {
       items.value = response.data
-      // console.log(items.value)
+      // console.log(response.data)
     })
     .catch((e) => {
       // console.log(e)
@@ -30,10 +30,10 @@ retrieveItems()
   </div>
 </template>
 
-<style scoped>
-  .photos {
-    column-count: auto;
-    column-width: 14rem;
-  }
-</style>
+    <style scoped>
+      .photos {
+        column-count: auto;
+        column-width: 14rem;
+      }
+    </style>
 

@@ -27,14 +27,6 @@ export const useAuthStore = defineStore('auth', () => {
     user = null
   }
 
-  function registerSuccess(): void {
-    status.loggedIn = false
-  }
-
-  function registerFailure(): void {
-    status.loggedIn = false
-  }
-
   function login(data: any): Promise<any> {
     return AuthService.login(data.phone, data.password).then(
       (user) => {

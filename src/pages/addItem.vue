@@ -131,7 +131,7 @@ retrieveCategories()
 
       <div class="form-group">
         <label for="description">Категория</label>
-        <select v-model="item.categoryId" class="form-seclect">
+        <select v-model="item.categoryId" class="form-select">
           <option v-for="categoryz in categories" :key="categoryz.id" :value="categoryz.id">
             {{ categoryz.name }}
           </option>
