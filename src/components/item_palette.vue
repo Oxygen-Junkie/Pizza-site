@@ -7,7 +7,7 @@ const flags = useFlagStore()
 const imageURL = ref('')
 
 function retrieveItems() {
-  imageURL.value = import.meta.env.VITE_base_api.toString() + import.meta.env.VITE_url_images.toString() + props.item.fileName
+  imageURL.value = `${import.meta.env.VITE_base_api.toString()}/${import.meta.env.VITE_url_images.toString()}${props.item.fileName}`
 }
 
 function setActiveItem() {

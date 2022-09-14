@@ -5,28 +5,23 @@ import http from './http-common'
 
 const API_URL = import.meta.env.VITE_url_item
 const BASE_URL = import.meta.env.VITE_base_api
+const CATEG_API_URL = import.meta.env.VITE_url_category
 
 class ItemDataService {
   getAll() {
     return http.get(`${API_URL}`)
   }
 
-  create(data: any, file: any) {
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append('body', data)
-    return axios.post(`${BASE_URL}${API_URL}`, formData, { headers: fileHeader() })
+  create(data: any) {
+    return axios.post(`${BASE_URL}/${API_URL}`, data, { headers: fileHeader() })
   }
 
   get(id: any) {
     return http.get(`${API_URL}${id}`)
   }
 
-  update(id: any, data: any, file: any) {
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append('body', data)
-    return axios.post(`${BASE_URL}${API_URL}${id}`, formData, { headers: fileHeader() })
+  update(id: any, data: any) {
+    return axios.post(`${BASE_URL}/${CATEG_API_URL}${id}`, data, { headers: fileHeader() })
   }
 
   delete(id: any) {
@@ -38,15 +33,15 @@ class ItemDataService {
   }
 
   createCategory(data: any) {
-    return http.post(`${API_URL}category`, data, { headers: authHeader() })
+    return http.post(`${CATEG_API_URL}`, data, { headers: authHeader() })
   }
 
   getAllCategories() {
-    return http.get(`${API_URL}category`)
+    return http.get(`${CATEG_API_URL}`)
   }
 
   getByCategory(id: any) {
-    return http.get(`${API_URL}category/${id}`)
+    return http.get(`${CATEG_API_URL}${id}`)
   }
 }
 

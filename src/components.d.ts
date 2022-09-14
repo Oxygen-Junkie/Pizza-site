@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    123: typeof import('./components/123.vue')['default']
     Categories: typeof import('./components/categories.vue')['default']
     Item_palette: typeof import('./components/item_palette.vue')['default']
     Item_view: typeof import('./components/item_view.vue')['default']
@@ -16,6 +15,5 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     Signin: typeof import('./components/signin.vue')['default']
     Signup: typeof import('./components/signup.vue')['default']
-    Test: typeof import('./components/test.vue')['default']
   }
 }

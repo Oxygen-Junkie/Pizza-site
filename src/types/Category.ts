@@ -1,5 +1,9 @@
-export default interface Category {
-  id: null
+export default class Category {
+  id!: number
   name: string
+
+  constructor() {
+    this.name = ''
+  }
 }
 

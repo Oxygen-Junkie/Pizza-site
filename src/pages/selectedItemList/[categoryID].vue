@@ -2,7 +2,7 @@
 import type { Ref } from 'vue'
 import ItemDataService from '~/services/itemDataService'
 import type Item from '~/types/Item'
-const props = defineProps<{ categoryID: number }>()
+const props = defineProps<{ categoryID: string }>()
 
 const items: Ref<Item[]> = ref([])
 
@@ -23,7 +23,7 @@ retrieveItems()
 <template>
   <div class="wrapper">
     <div class="photos">
-      <image_palette
+      <item_palette
         v-for="item in items"
         :key="item.id"
         :item="item"

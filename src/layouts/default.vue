@@ -6,19 +6,29 @@ const flags = useFlagStore()
 
 <template>
   <main>
-    <div class="container h-100">
-      <signin v-if="flags.popUpSignIn" />
-      <signup v-if="flags.popUpSignUp" />
-      <item-view v-if="flags.popUpItem" :item="flags.getItem()" />
-      <div :class="{ 'b blur': flags.shade }">
-        <navigation :key="flags.render" />
-        <div class="siteContent">
-          <div class="categTab">
-            <categories />
-          </div>
-          <div class="pageTab">
-            <RouterView />
-          </div>
+    <signin v-if="flags.popUpSignIn" />
+    <signup v-if="flags.popUpSignUp" />
+    <item_view v-if="flags.popUpItem" :item="flags.getItem()" />
+    <div :class="{ 'b blur': flags.shade }">
+      <navigation :key="flags.render" />
+      <div
+        style="
+          display:flex;
+        "
+      >
+        <div
+          style="
+          flex: 0.6;
+        "
+        >
+          <categories />
+        </div>
+        <div
+          style="
+          flex: 6;
+        "
+        >
+          <RouterView />
         </div>
       </div>
     </div>
@@ -28,16 +38,5 @@ const flags = useFlagStore()
 <style scoped>
   .b.blur{
     filter:blur(5px);
-  };
-  .siteContent{
-    display:flex;
-    width:100%;
-  };
-  .categTab{
-    flex: 2;
-    flex-flow:column;
-  };
-  .pageTab{
-    flex: 5;
   };
 </style>

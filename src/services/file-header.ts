@@ -5,7 +5,6 @@ export default function fileHeader(): Record<string, string> {
   if (user && user.accessToken) {
     return {
       'x-access-token': user.accessToken,
-      'Content-Type': 'multipart/form-data',
     }
   }
   else { return {} }

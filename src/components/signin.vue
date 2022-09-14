@@ -10,7 +10,10 @@ const flags = useFlagStore()
 const router = useRouter()
 
 const loading = ref(false)
+const loadingReg = ref(false)
 const message = ref('')
+const phonez = ref('')
+const passwordz = ref('')
 const schema = yup.object().shape({
   phone: yup.string().required('Требуется номер телефона!').phone('RU', true, 'Номер телефона недействителен!'),
   password: yup.string().required('Требуется пароль!'),
@@ -30,6 +33,7 @@ function handleLogin(user: any) {
   if (user.phone && user.password) {
     auth.login(user).then(
       () => {
+        loading.value = false
         router.push('/profile')
         flags.closePopUps()
         flags.rerender()
@@ -46,8 +50,28 @@ function handleLogin(user: any) {
   }
 }
 
-function registerInstead() {
-  flags.changePopUpSignUp()
+function handleRegister() {
+  loadingReg.value = true
+  message.value = ''
+
+  if (phonez && passwordz) {
+    auth.register({ phonez, passwordz }).then(
+      () => {
+        router.push('/profile')
+        loadingReg.value = false
+        flags.closePopUps()
+        flags.rerender()
+      },
+      (error: { response: { data: { message: any } }; message: any; toString: () => any }) => {
+        loadingReg.value = false
+        message.value
+                = (error.response
+                  && error.response.data
+                  && error.response.data.message)
+                || error.message || error.toString()
+      },
+    )
+  }
 }
 </script>
 
@@ -65,6 +89,7 @@ function registerInstead() {
       <div class="form-group">
         <label for="phone">Номер телефона</label>
         <Field
+          v-model="phonez"
           name="phone"
           type="tel"
           class="form-control"
@@ -74,6 +99,7 @@ function registerInstead() {
       <div class="form-group">
         <label for="password">Пароль</label>
         <Field
+          v-model="passwordz"
           name="password"
           type="password"
           class="form-control"
@@ -82,7 +108,11 @@ function registerInstead() {
       </div>
 
       <div class="form-group">
-        <button class="btn btn-link" @click.prevent="registerInstead">
+        <button class="btn btn-link" @click.prevent="handleRegister">
+          <span
+            v-show="loadingReg"
+            class="spinner-border spinner-border-sm"
+          />
           <span>Зарегистрироваться</span>
         </button>
       </div>
@@ -126,10 +156,10 @@ function registerInstead() {
       -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
       -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
       box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-      position:fixed;
+      position:fixed; z-index: 2;
       top: 50%;
       left: 50%;
-      margin-left:-250px;
+      margin-left:-100px;
       margin-top:-200px;
     }
 
@@ -141,6 +171,10 @@ function registerInstead() {
       -moz-border-radius: 50%;
       -webkit-border-radius: 50%;
       border-radius: 50%;
+    }
+
+    .btn {
+      margin: 5px;
     }
     </style>
 

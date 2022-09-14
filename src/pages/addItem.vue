@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
 import ItemDataService from '~/services/itemDataService'
-import type Item from '~/types/Item'
-import type Category from '~/types/Category'
+import Item from '~/types/Item'
+import Category from '~/types/Category'
 
 const categories: Ref<any> = ref([])
-const category: Ref<Category> = ref() as Ref<Category>
+const category: Ref<Category> = ref(new Category())
 const submitted = ref(false)
 const submittedCat = ref(false)
-const item: Ref<Item> = ref() as Ref<Item>
-let image: any
+const item: Ref<Item> = ref(new Item())
+const image = ref()
+const flags = useFlagStore()
 
 function retrieveCategories() {
   ItemDataService.getAllCategories()
@@ -23,7 +24,12 @@ function retrieveCategories() {
 }
 
 function saveItem() {
-  ItemDataService.create(item, image)
+  const formData = new FormData()
+  formData.append('file', image.value.files[0])
+  Object.entries(item.value).forEach(([key, value]) => {
+    formData.append(key, value)
+  })
+  ItemDataService.create(formData)
     .then((response) => {
       item.value.id = response.data.id
       // console.log(response.data)
@@ -40,11 +46,12 @@ function newItem() {
 }
 
 function saveCategory() {
-  ItemDataService.createCategory(category)
+  ItemDataService.createCategory(category.value)
     .then((response) => {
       category.value.id = response.data.id
       // console.log(response.data)
       submittedCat.value = true
+      flags.rerender()
     })
     .catch((e) => {
       // console.log(e)
@@ -56,10 +63,6 @@ function newCategory() {
   category.value = ref().value
 }
 
-function receiveImage(imagez: any) {
-  image = imagez
-}
-
 retrieveCategories()
 </script>
 
@@ -69,14 +72,13 @@ retrieveCategories()
       <div class="form-group">
         <label for="image">Изображение</label>
         <input
-          :ref="(image) => { receiveImage(image) }"
+          :ref="(e) => { image = e }"
           type="file"
           class="form-control"
           accept="image/*"
           required
           name="image"
         >
-        <span v-if="image">Название файла должно быть тут !</span>
       </div>
       <div class="form-group">
         <label for="title">Наименование</label>
@@ -129,8 +131,8 @@ retrieveCategories()
 
       <div class="form-group">
         <label for="description">Категория</label>
-        <select v-model="item.categoryId" class="form-select">
-          <option v-for="categoryz in categories" :key="categoryz.id" :value="categoryz.name">
+        <select v-model="item.categoryId" class="form-seclect">
+          <option v-for="categoryz in categories" :key="categoryz.id" :value="categoryz.id">
             {{ categoryz.name }}
           </option>
         </select>
@@ -181,4 +183,8 @@ retrieveCategories()
   max-width: 300px;
   margin: auto;
 }
+
+.btn {
+      margin-top: 10px;
+    }
 </style>

@@ -1,9 +1,17 @@
-export default interface Item {
-  id: null
+export default class Item {
+  id!: number
   fileName: string
   title: string
   description: string
   price: number
   availability: number
-  categoryId: null
+  categoryId!: number
+
+  constructor() {
+    this.fileName = ''
+    this.title = ''
+    this.description = ''
+    this.price = 0
+    this.availability = 0
+  }
 }

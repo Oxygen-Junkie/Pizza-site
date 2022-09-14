@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as yup from 'yup'
+import { ErrorMessage, Field, Form } from 'vee-validate'
 import { useAuthStore } from '~/store/auth.module'
 import { useFlagStore } from '~/store/flags.module'
 import 'yup-phone'
@@ -115,3 +116,9 @@ if (!currentUser) {
     </div>
   </div>
 </template>
+
+<style scoped>
+  .btn {
+      margin-top: 10px;
+    }
+  </style>

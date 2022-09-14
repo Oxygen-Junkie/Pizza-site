@@ -14,7 +14,7 @@ const currentItem: Ref<Item> = ref(props.item)
 const imageURL = ref('')
 
 function retrieveItem() {
-  imageURL.value = import.meta.env.VITE_base_api.toString() + import.meta.env.VITE_url_images.toString() + currentItem.value.fileName
+  imageURL.value = `${import.meta.env.VITE_base_api.toString()}/${import.meta.env.VITE_url_images.toString()}${currentItem.value.fileName}`
 }
 
 function buy() {
@@ -34,7 +34,7 @@ retrieveItem()
 <template>
   <div class="card card-container">
     <div class="text-right">
-      <button type="button" @click.prevent="flags.closePopUps" />
+      <button type="button" class="btn-close" @click.prevent="flags.closePopUps" />
     </div>
     <img
       :src="imageURL"
@@ -45,7 +45,7 @@ retrieveItem()
       {{ currentItem.title }}
     </div>
     <div>
-      <label><strong>Описание:</strong></label>
+      <label><strong>Описание:</strong></label><br>
       {{ currentItem.description }}
     </div>
     <div>
@@ -86,10 +86,15 @@ retrieveItem()
   -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  position:fixed;
+  position:fixed;  z-index: 2;
   top: 50%;
   left: 50%;
-  margin-left:-250px;
+  margin-left:-100px;
   margin-top:-200px;
 }
+
+.badge {
+    margin: 5px;
+    font-size: 20px;
+  }
 </style>

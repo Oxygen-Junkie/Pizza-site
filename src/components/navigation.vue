@@ -59,7 +59,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <nav class=" navbar navbar-expand navbar-blue bg-blue" :class="{ 'n--hidden': !showHeadbar }">
+  <nav class=" navbar navbar-expand navbar-blue bg-blue" :class="{ 'h--hidden': !showHeadbar }">
     <a href="/" class="navbar-brand">Apteka</a>
     <div class="navbar-nav mr-auto">
       <li class="nav-item">
@@ -72,6 +72,15 @@ onUnmounted(() => {
           <p i-carbon-pills-add /> Добавить предмет
         </router-link>
       </li>
+    </div>
+
+    <div class="input-group mb-3">
+      <input v-model="title" type="text" class="form-control" placeholder="Введите название товара">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary bg-blue" type="button" @click="searchTitle">
+          Найти
+        </button>
+      </div>
     </div>
 
     <div v-if="!currentUser" class="navbar-nav ml-auto">

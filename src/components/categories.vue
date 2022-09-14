@@ -30,12 +30,12 @@ retrieveCategories()
 
 <template>
   <div class="list bg-blue">
-    <h4>Категории</h4>
+    <p>Категории</p>
     <ul class="list-group">
       <li
         v-for="(category, index) in categories"
         :key="index"
-        class="list-group-item"
+        class="list-group-item bg-lavender"
         :class="{ active: index === currentIndex }"
         :disabled="flags.shade"
         @click="setActiveCategory(category, index)"
@@ -47,5 +47,8 @@ retrieveCategories()
 </template>
 
 <style scoped>
+  .list-group-item {
+    padding: 2px;
+  }
 </style>
 
