@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  title: 'Apteka',
+  title: 'Pizza site',
   meta: [
     { name: 'description', content: 'Apteka site' },
     {
