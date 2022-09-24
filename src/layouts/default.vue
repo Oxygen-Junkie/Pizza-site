@@ -6,7 +6,7 @@ const flags = useFlagStore()
 
 <template>
   <main>
-    <item_view />
+    <item_view v-if="flags.popUpItem" :item="flags.getItem()" />
     <div :class="{ 'b blur': flags.shade }">
       <navigation :key="flags.render" />
       <RouterView />
