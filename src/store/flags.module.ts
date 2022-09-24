@@ -1,15 +1,12 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import Item from '~/types/Item'
+import type Item from '~/types/Item'
 
 export const useFlagStore = defineStore('flag', () => {
-  /**
-   * Current name of the user.
-   */
   const popUpItem = ref(false)
   const shade = ref(false)
   const render = ref(-1)
   let item: Item
-  
+
   function closePopUps() {
     popUpItem.value = false
     shade.value = false
