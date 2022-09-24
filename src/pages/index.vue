@@ -1,27 +1,49 @@
 <script setup lang="ts">
-import UserService from '~/services/UserService'
+import type { Ref } from 'vue'
+import ItemDataService from '~/services/itemDataService'
+import type Item from '~/types/Item'
 
-const content = ref('')
+const items: Ref<Item[]> = ref([])
+const loading = ref(true)
 
-onMounted(() => {
-  UserService.getPublicContent().then(
-    (response) => {
-      content.value = response.data
-    },
-    (error) => {
-      content.value
-          = (error.response && error.response.data)
-          || error.message
-          || error.toString()
-    },
-  )
-})
+function retrieveItems() {
+  ItemDataService.getAll()
+    .then((response) => {
+      items.value = response.data
+      loading.value = false
+      // console.log(items.value)
+    })
+    .catch((e) => {
+      // console.log(e)
+    })
+}
+
+retrieveItems()
 </script>
 
 <template>
-  <div class="container">
-    <header class="jumbotron">
-      NOSEp
-    </header>
+  <div>
+    <div v-if="loading" class="text-center">
+      <span
+        v-show="loading"
+        class="spinner-grow text-warning m-30"
+        style="width: 30rem; height: 30rem; "
+      />
+    </div>
+    <div v-else class="photos">
+      <item_palette
+        v-for="item in items"
+        :key="item.id"
+        :item="item"
+      />
+    </div>
   </div>
 </template>
+
+<style scoped>
+  .photos {
+    column-count: auto;
+    column-width: 14rem;
+  }
+</style>
+
