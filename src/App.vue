@@ -1,8 +1,8 @@
 <script setup lang="ts">
 useHead({
-  title: 'Pizza site',
+  title: 'Pizza',
   meta: [
-    { name: 'description', content: 'Apteka site' },
+    { name: 'description', content: 'Pizza site' },
     {
       name: 'theme-color',
       content: computed(() => isDark.value ? '#00aba9' : '#ffffff'),
