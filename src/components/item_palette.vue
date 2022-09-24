@@ -36,7 +36,7 @@ retrieveItems()
   .photo {
     margin-bottom: 10px;
     border: solid;
-    border-color: aqua;
+    border-color: whitesmoke;
     position: relative;
     text-align: center;
   }

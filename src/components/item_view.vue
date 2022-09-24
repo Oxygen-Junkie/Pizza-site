@@ -1,31 +1,20 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
 import type Item from '~/types/Item'
-import { useAuthStore } from '~/store/auth.module'
 import { useFlagStore } from '~/store/flags.module'
 
 const props = defineProps<{ item: Item }>()
-const auth = useAuthStore()
 const flags = useFlagStore()
-
-const currentUser = $ref(auth.getUser())
 
 const currentItem: Ref<Item> = ref(props.item)
 const imageURL = ref('')
+const message = ref('')
 
 function retrieveItem() {
   imageURL.value = `${import.meta.env.VITE_base_api.toString()}/${import.meta.env.VITE_url_images.toString()}${currentItem.value.fileName}`
 }
 
 function buy() {
-
-}
-
-const showEditButton = () => {
-  if (currentUser && currentUser.roles)
-    return currentUser.roles.includes('ROLE_MANAGER')
-
-  return false
 }
 
 retrieveItem()
@@ -52,22 +41,15 @@ retrieveItem()
       <label><strong>Цена:</strong></label>
       {{ currentItem.price }}
     </div>
-    <div>
-      <label><strong>Количество:</strong></label>
-      {{ currentItem.availability }}
-    </div>
 
-    <button class="badge bg-blue" @click.prevent="buy">
+    <button class="badge bg-yellow" @click="buy">
+      <span i-carbon-shopping-cart-plus />
       Купить
     </button>
 
-    <router-link
-      v-if="showEditButton()"
-      class="badge bg-green"
-      :to="`/itemDetails/${currentItem.id}`"
-    >
-      Изменить
-    </router-link>
+    <div v-if="message" class="alert alert-danger" role="alert">
+      {{ message }}
+    </div>
   </div>
 </template>
 
@@ -87,10 +69,10 @@ retrieveItem()
   -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   position:fixed;  z-index: 2;
-  top: 50%;
+  top: 35%;
   left: 50%;
   margin-left:-100px;
-  margin-top:-200px;
+  margin-top:-130px;
 }
 
 .badge {
