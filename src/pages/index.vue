@@ -2,6 +2,7 @@
 import type { Ref } from 'vue'
 import ItemDataService from '~/services/itemDataService'
 import type Item from '~/types/Item'
+const flags = useFlagStore()
 
 const items: Ref<Item[]> = ref([])
 const loading = ref(true)
@@ -18,6 +19,7 @@ function retrieveItems() {
     })
 }
 
+flags.closePopUps()
 retrieveItems()
 </script>
 

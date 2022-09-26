@@ -79,13 +79,13 @@ function newItem() {
           name="price"
         >
       </div>
-      <button class="btn bg-blue" @click="saveItem">
+      <button class="btn bg-yellow" @click="saveItem">
         Добавить товар
       </button>
     </div>
     <div v-else>
       <h4>Товар успешно добавлен</h4>
-      <button class="btn bg-blue" @click="newItem">
+      <button class="btn bg-yellow" @click="newItem">
         Добавить ещё один товар
       </button>
     </div>
