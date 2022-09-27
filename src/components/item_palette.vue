@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import type Item from '~/types/Item'
 import { useFlagStore } from '~/store/flags.module'
-const props = defineProps<{ item: Item }>()
+const props = defineProps<{ item: Item; bin: boolean }>()
 const flags = useFlagStore()
+const currentItem: Ref<Item> = ref(props.item)
 
 const imageURL = ref('')
 
@@ -12,45 +14,58 @@ function retrieveItems() {
 
 function setActiveItem() {
   flags.setItem(props.item)
-  flags.changePopUpItem()
+	flags.changePopUpItem()
 }
+
+
 
 retrieveItems()
 </script>
 
 <template>
-  <div class="photo">
-    <button :disabled="flags.shade" @click.prevent="setActiveItem">
-      <img :src="imageURL" loading="lazy">
-    </button>
-    <p class="name">
-      {{ props.item.title }}
+  <div class="item" :disabled="flags.shade" @click.prevent="setActiveItem">
+    <p>
+      <img class="rounded center" :src="imageURL" loading="lazy">
     </p>
-    <p class="price">
-      {{ props.item.price }}
-    </p>
+    <div class="name">
+      <strong class="text-warning">{{ props.item.title }}</strong>
+    </div>
+    <div class="price">
+      {{ ` ${currentItem.price}руб ` }}
+    </div>
   </div>
 </template>
 
 <style scoped>
-  .photo {
+  .item {
     margin-bottom: 10px;
     border: solid;
     border-color: whitesmoke;
+    border-right: 0;
+    border-top: 0;
     position: relative;
     text-align: center;
+    cursor:pointer;
+  }
+  .item:hover {
+    background: linear-gradient(45deg, grey, white, grey);
+  }
+  .center {
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    width:50%;
   }
   .name {
     position: absolute;
-    bottom: 1px;
+    top: 1px;
     left: 1px;
-    background-color: white;
+    background-color: whitesmoke;
   }
-
   .price {
     position: absolute;
     bottom: 1px;
-    right: 1px;
-    background-color: white;
+    left: 1px;
+    background-color: whitesmoke;
   }
 </style>
