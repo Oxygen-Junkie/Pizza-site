@@ -48,7 +48,7 @@ function newItem() {
         <label for="title">Наименование</label>
         <input
           id="title"
-          v-model="item.title"
+          v-model.trim="item.title"
           type="text"
           class="form-control"
           required
@@ -71,7 +71,7 @@ function newItem() {
         <label for="description">Цена</label>
         <input
           id="price"
-          v-model="item.price"
+          v-model.trim="item.price"
           type="number"
           class="form-control"
           min="0"

@@ -29,7 +29,7 @@ retrieveItems()
       <span
         v-show="loading"
         class="spinner-grow text-warning m-30"
-        style="width: 30rem; height: 30rem; "
+        style="width: 9rem; height: 9rem; "
       />
     </div>
     <div v-else class="photos">

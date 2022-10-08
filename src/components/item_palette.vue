@@ -2,7 +2,7 @@
 import type { Ref } from 'vue'
 import type Item from '~/types/Item'
 import { useFlagStore } from '~/store/flags.module'
-const props = defineProps<{ item: Item; bin: boolean }>()
+const props = defineProps<{ item: Item }>()
 const flags = useFlagStore()
 const currentItem: Ref<Item> = ref(props.item)
 
@@ -14,10 +14,8 @@ function retrieveItems() {
 
 function setActiveItem() {
   flags.setItem(props.item)
-	flags.changePopUpItem()
+  flags.changePopUpItem()
 }
-
-
 
 retrieveItems()
 </script>
