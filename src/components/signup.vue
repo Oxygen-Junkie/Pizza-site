@@ -10,6 +10,7 @@ const flags = useFlagStore()
 const router = useRouter()
 
 const loading = ref(false)
+const successful = ref(false)
 const message = ref('')
 const locationz = ref(flags.location)
 const schema = yup.object().shape({
@@ -36,7 +37,9 @@ function handleRegister(user: any) {
   if (location && phone && password) {
     auth.register({ location, phone, password }).then(
       () => {
+        message.value = 'Регистрация прошла успешно'
         loading.value = false
+        successful.value = true
       },
       (error: { response: { data: { message: any } }; message: any; toString: () => any }) => {
         loading.value = false
@@ -45,12 +48,14 @@ function handleRegister(user: any) {
                   && error.response.data
                   && error.response.data.message)
                 || error.message || error.toString()
+        successful.value = false
       },
     )
   }
   else if (location === '') {
     message.value = 'Укажите адрес'
     loading.value = false
+    successful.value = false
   }
 }
 </script>
@@ -108,6 +113,12 @@ function handleRegister(user: any) {
 
         <div class="form-group">
           <div v-if="message" class="alert alert-danger" role="alert">
+            {{ message && !successful }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div v-if="message && successful" class="alert alert-success" role="alert">
             {{ message }}
           </div>
         </div>
