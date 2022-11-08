@@ -55,14 +55,6 @@ onUnmounted(() => {
         </router-link>
       </li>
     </div>
-
-    <div v-if="!currentUser" class="navbar-nav mb-3">
-      <li class="nav-item">
-        <button class="nav-link" :disabled="flags.shade" @click.prevent="flags.changePopUpSignUp">
-          <p i-carbon-user-follow /> Зарегистрироваться
-        </button>
-      </li>
-    </div>
     
     <div class="navbar-nav mb-3">
       <li class="nav-item">
@@ -70,8 +62,16 @@ onUnmounted(() => {
           <p i-carbon-shopping-cart /> Корзина
         </router-link>
       </li>
-     </div> 
-
+    </div>
+    
+    <div v-if="!currentUser" class="navbar-nav mb-3">
+      <li class="nav-item">
+        <button class="nav-link" :disabled="flags.shade" @click.prevent="flags.changePopUpSignUp">
+          <p i-carbon-user-follow /> Зарегистрироваться
+        </button>
+      </li>
+    </div>
+   
     <div v-if="!currentUser" class="navbar-nav mb-3">
       <li class="nav-item">
         <button class="nav-link" :disabled="flags.shade" @click.prevent="flags.changePopUpSignIn">
