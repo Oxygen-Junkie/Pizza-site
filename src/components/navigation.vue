@@ -63,6 +63,14 @@ onUnmounted(() => {
         </button>
       </li>
     </div>
+    
+    <div class="navbar-nav mb-3">
+      <li class="nav-item">
+          <router-link v-show="!flags.shade" to="/cart" class="nav-link">
+          <p i-carbon-shopping-cart /> Корзина
+        </router-link>
+      </li>
+     </div> 
 
     <div v-if="!currentUser" class="navbar-nav mb-3">
       <li class="nav-item">
