@@ -85,7 +85,7 @@ max="5000"
       </button>
     </div>
     <div v-else>
-      <h4>Товар успешно добавлен</h4>
+      Предмет успешно добавлен</h4>
       <button class="btn bg-yellow" @click="newItem">
         Добавить ещё один предмет
       </button>
