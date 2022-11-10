@@ -43,6 +43,10 @@ retrieveItem()
           {{`: ${currentItem.price}руб`}}
         </span>
       </div>
+<div>
+<label>Количество</label>
+        <input type="number" min="1" max="10" />
+</div>
 
       <button class="badge bg-yellow">
         <span i-carbon-shopping-cart-plus />
