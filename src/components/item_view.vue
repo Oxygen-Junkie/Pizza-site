@@ -48,6 +48,10 @@ retrieveItem()
         <span i-carbon-shopping-cart-plus />
         Купить
       </button>
+<button class="badge bg-green">
+        <span i-carbon-shopping-cart-plus />
+        В корзину
+      </button>
 
     </div>
   </div>
