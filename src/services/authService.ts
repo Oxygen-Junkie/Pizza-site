@@ -21,7 +21,7 @@ class AuthService {
     localStorage.removeItem('user')
   }
 
-  register(location: string, phone: string, password: string) {
+  register(phone: string, password: string) {
     return http.post(`${REG_URL}`, {
       location,
       phone,
