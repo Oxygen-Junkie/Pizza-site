@@ -45,7 +45,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function register(data: any): Promise<any> {
-    return AuthService.register(data.location, data.phone, data.password).then(
+    return AuthService.register(data.phone, data.password).then(
       (user) => {
         loginSuccess(user)
         return Promise.resolve(user)
