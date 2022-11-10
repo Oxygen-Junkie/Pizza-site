@@ -58,7 +58,7 @@ function newItem() {
 
       <div class="form-group">
         <label for="description">Описание</label>
-        <input
+        <textarea
           id="description"
           v-model="item.description"
           class="form-control"
@@ -74,19 +74,20 @@ function newItem() {
           v-model.trim="item.price"
           type="number"
           class="form-control"
-          min="0"
+          min="200"
+max="5000"
           required
           name="price"
         >
       </div>
       <button class="btn bg-yellow" @click="saveItem">
-        Добавить товар
+        Добавить предмет
       </button>
     </div>
     <div v-else>
       <h4>Товар успешно добавлен</h4>
       <button class="btn bg-yellow" @click="newItem">
-        Добавить ещё один товар
+        Добавить ещё один предмет
       </button>
     </div>
   </div>
