@@ -38,9 +38,9 @@ retrieveItem()
         {{ currentItem.description }}
       </span>
 	    <div>
-        <label>Цена</label>
+        <label>Цена: &nbsp;</label>
         <span class="text-warning">
-          {{`: ${currentItem.price}руб`}}
+          {{` ${currentItem.price}руб`}}
         </span>
       </div>
 <div>
