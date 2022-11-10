@@ -33,7 +33,6 @@ function handleLogin(user: any) {
     auth.login(user).then(
       () => {
         loading.value = false
-        router.push('/profile')
         flags.closePopUps()
         flags.rerender()
       },
