@@ -107,8 +107,8 @@ function handleRegister(user: any) {
         </div>
 
         <div class="form-group">
-          <div v-if="message" class="alert alert-danger" role="alert">
-            {{ message && !successful }}
+          <div v-if="message && !successful" class="alert alert-danger" role="alert">
+            {{ message }}
           </div>
         </div>
 
