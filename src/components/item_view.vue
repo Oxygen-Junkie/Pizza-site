@@ -45,7 +45,7 @@ retrieveItem()
       </div>
 <div>
 <label>Количество</label>
-        <input class="text-center" type="number" min="1" max="10" />
+        <input class="text-center" value="1" type="number" min="1" max="10" />
 </div>
 
       <button class="badge bg-yellow">
