@@ -12,7 +12,7 @@ const router = useRouter()
 const loading = ref(false)
 const successful = ref(false)
 const message = ref('')
-const locationz = ref(flags.location)
+
 const schema = yup.object().shape({
   phone: yup.string().required('Требуется номер телефона!').phone('RU', true, 'Номер телефона указан неверно'),
   password: yup.string().required('Требуется пароль!'),
@@ -30,12 +30,11 @@ function handleRegister(user: any) {
   loading.value = true
   message.value = ''
 
-  const location = locationz.value
   const phone = user.phone
   const password = user.password
 
-  if (location && phone && password) {
-    auth.register({ location, phone, password }).then(
+  if (phone && password) {
+    auth.register({ phone, password }).then(
       () => {
         message.value = 'Регистрация прошла успешно'
         loading.value = false
@@ -74,10 +73,6 @@ function handleRegister(user: any) {
         class="profile-img-card"
       />
       <Form :validation-schema="schema" @submit="handleRegister">
-        <div class="form-group">
-          <label>Адрес</label>
-          <LocationInput />
-        </div>
         <div class="form-group">
           <label for="phone">Номер телефона</label>
           <Field
